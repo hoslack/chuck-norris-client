@@ -26,6 +26,7 @@ const  SignIn: React.FC = () => {
 
   return (
     <form onSubmit={onSubmit}>
+        <label>Sign In</label>
       <input name="email" placeholder="email" ref={register} />
       {errors?.email && <p>{errors.email.message}</p>}
       

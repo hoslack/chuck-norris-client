@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import React from 'react';
 import { useForm, Resolver } from 'react-hook-form';
+import { toast } from 'react-toastify'
 import { SIGNUP } from '../queries'
 
 
@@ -27,8 +28,13 @@ const  SignIn: React.FC = () => {
   const { register, handleSubmit, errors } = useForm<FormValues>({ resolver });
   const [signUp, {loading, error, data}] = useMutation(SIGNUP)
   const onSubmit = handleSubmit(async ({email, password }) => {
-      await signUp({ variables: { email, password } });
-      console.log(data)
+    try{
+    await signUp({ variables: { email, password } });
+    console.log(data)
+    }  catch(err){
+        toast.error(err.message)
+        console.log(err.message);
+    }
 });
 
   return (
