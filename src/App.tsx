@@ -1,25 +1,22 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client'
-import SignIn from './components/SignIn';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Home } from './components/index';
+import AuthContextProvider from './context/AuthContextProvider';
+import NavBar from './components/NavBar';
+import Joke from './components/Joke';
 
 const App: React.FC = () => {
-const CATEGORIES = gql`{
-  categories
-}`
-  const { loading, error, data } = useQuery(CATEGORIES)
-  console.log(loading, data, error)
-
-  if(loading){
-    return <div>
-    <h1>Loading</h1>
-  </div>
-  }else{
   return (
-    <div>
-      {data.categories.map((category: string) => <h1>{category}</h1>)}
-      <SignIn/>
-    </div>
-  );}
+  <BrowserRouter>
+    <Switch>
+      <AuthContextProvider>
+        <NavBar/>
+        <Route exact path='/' component={Home}/>
+        <Route exact path='/joke' component={Joke}/>
+      </AuthContextProvider>
+    </Switch>
+  </BrowserRouter>
+  )
 }
 
 export default App;
