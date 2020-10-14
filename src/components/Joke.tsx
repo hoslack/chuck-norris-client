@@ -19,7 +19,6 @@ const Joke: React.FC<IProps> = ({ category }: IProps) => {
   const getJoke = async () => {
     try {
       const response = await joke({ variables: { category } });
-      console.log(response.data.joke);
       setJokeObject(response.data.joke);
     } catch (err) {
       console.log(err);

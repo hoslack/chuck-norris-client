@@ -36,7 +36,7 @@ const SignIn: React.FC = () => {
   let history = useHistory();
   const { isAuth, setAuth } = useContext(AuthContext);
   const { register, handleSubmit, errors } = useForm<FormValues>({ resolver });
-  const [signUp, {}] = useMutation(SIGNUP);
+  const [signUp] = useMutation(SIGNUP);
   const onSubmit = handleSubmit(async ({ email, password }) => {
     try {
       const response = await signUp({ variables: { email, password } });
