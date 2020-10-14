@@ -54,10 +54,10 @@ const NavBar: React.FC = () => {
     if(isAuth){
         return (
             <Wrapper>
-                <NavbarItem>
+                <NavbarItem onClick={(e)=>{e.preventDefault()}}>
                       <Link to='/'>Home</Link>
                 </NavbarItem>
-                <NavbarItem>
+                <NavbarItem onClick={(e)=>{e.preventDefault()}}>
                     <Link to='/categories'>Categories</Link>
                 </NavbarItem>
                 <NavbarItem onClick={logout}>Log out</NavbarItem>
@@ -67,14 +67,20 @@ const NavBar: React.FC = () => {
     else{
         return (
             <Wrapper>
-                <NavbarItem>
-                      <Link to='/'>Home</Link>
+                <NavbarItem
+                onClick={(e)=>{e.preventDefault()}}
+                >
+                    <Link to='/'>Home</Link>
                 </NavbarItem>
-                <NavbarItem>
+                <NavbarItem
+                onClick={(e)=>{e.preventDefault()}}
+                >
                     <Link to='/signup'>Sign up</Link>
                 </NavbarItem>
-                <NavbarItem>
-                      <Link to='/signin'>Sign in</Link>
+                <NavbarItem
+                onClick={(e)=>{e.preventDefault()}}
+                >
+                     <Link to='/signin'>Sign in</Link>
                 </NavbarItem>
             </Wrapper>
               );

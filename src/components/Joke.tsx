@@ -58,15 +58,14 @@ padding: 1rem;
 margin: 0 auto;
 margin-top: 50px;
 `
-
 const JokeText = styled.p`
+margin: 0 auto;
 font-family: 'Roboto', sans-serif;
 font-size: 20px;
 letter-spacing: 2.5px;
 font-weight: 500;
 color: #000;
 `
-
 const JokeIcon = styled.img`
 margin: 0 auto;
 margin-bottom: 20px;
