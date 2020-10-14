@@ -20,7 +20,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   });
   return forward(operation);
 })
-const httpLink = createHttpLink({uri: 'http://localhost:4000/graphql'})
+const httpLink = createHttpLink({uri: 'https://still-falls-96093.herokuapp.com/graphql'})
 
 const client = new ApolloClient({
   link: concat(authMiddleware, httpLink),
