@@ -1,13 +1,32 @@
-import React from 'react';
-import { useQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react';
+import { useMutation } from '@apollo/client'
 import { JOKE } from '../queries'
 import styled from 'styled-components';
 var Loader = require('react-loader')
 
+interface IProps {
+    category: string
+  }
 
-const Joke: React.FC = () => {
-    const { loading, error, data } = useQuery(JOKE)
-    console.log(data)
+const Joke: React.FC<IProps> = ({category}: IProps) => {
+    console.log(category)
+    const [jokeText, setJokeText] = useState('')
+    const [ joke, {loading, error, data} ] = useMutation(JOKE);
+
+    const getJoke = async () => {
+        try{
+            const response = await joke({ variables: { category } })
+            console.log(response)
+            
+            }  catch(err){
+                console.log(err)
+            }
+    }
+
+      useEffect(()=> {
+        getJoke()
+      },[category])
+
     if(loading){
         return <Loader loaded={!loading}/>
       }else if(error){
@@ -22,6 +41,7 @@ const Joke: React.FC = () => {
       </JokeContainer>)
 }
 }
+
 
 const JokeContainer = styled.div`
 display: flex;

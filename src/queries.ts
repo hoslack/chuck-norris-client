@@ -22,7 +22,7 @@ const SIGNIN = gql`
 
 
 const JOKE = gql`
-  query joke($category: String!){
+  mutation joke($category: String!){
     joke(category: $category) {
       id,
       value,

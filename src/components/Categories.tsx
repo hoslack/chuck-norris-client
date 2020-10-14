@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/client'
 import { CATEGORIES } from '../queries'
@@ -12,13 +12,20 @@ const Categories: React.FC = () => {
     let history = useHistory();
     const {isAuth, setAuth} = useContext(AuthContext)
     const { loading, error, data } = useQuery(CATEGORIES)
+    const [currentCategory, setCurrentCategory] = useState('movie')
+
+    const handleCategory = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
+        event.preventDefault()
+        setCurrentCategory(data.categories[index])
+    } 
 
     useEffect(()=>{
         const token = window.localStorage.getItem('token') || null
         if(!token && !isAuth){
             history.push('/')
         }
-    },[isAuth, history])
+    },[isAuth, history, data])
+
     if(loading){
         return (<Loader loaded={!loading}/>)
       } else if(error){
@@ -28,9 +35,15 @@ const Categories: React.FC = () => {
     return (
     <div>
         <CategoryContainer>
-          {data.categories.map((category: string) => <CategoryButton key={category}>{category}</CategoryButton>)}
+          {data.categories.map((category: string, index: number) => 
+          <CategoryButton 
+          onClick={(e) => {handleCategory(e, index)}}
+           key={category}
+           >
+               {category}
+        </CategoryButton>)}
         </CategoryContainer>
-        <div>Joke</div>
+        <Joke category={currentCategory} />
     </div>
     )}
 }
