@@ -5,7 +5,7 @@ const CATEGORIES = gql`{
   }`
 
 const SIGNUP = gql`
-  mutation signUp($email: String!, $password: String!) {
+  mutation SignUp($email: String!, $password: String!) {
     signUp(email: $email, password: $password){
       email
     }
@@ -13,7 +13,7 @@ const SIGNUP = gql`
 `;
 
 const SIGNIN = gql`
-  mutation signIn($email: String!, $password: String!) {
+  mutation SignIn($email: String!, $password: String!) {
     signIn(email: $email,  password: $password){
       accessToken
     }

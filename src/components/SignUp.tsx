@@ -1,8 +1,11 @@
+import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client';
-import React from 'react';
 import { useForm, Resolver } from 'react-hook-form';
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import { SIGNUP } from '../queries'
+import AuthContext from '../context/AuthContext'
+import { SubmitButton, PasswordInput, EmailInput, FormHeader, FormContainer } from './SignIn'
 
 
 type FormValues = {
@@ -25,28 +28,37 @@ const resolver: Resolver<FormValues> = async (values) => {
 };
 
 const  SignIn: React.FC = () => {
-  const { register, handleSubmit, errors } = useForm<FormValues>({ resolver });
-  const [signUp, {loading, error, data}] = useMutation(SIGNUP)
-  const onSubmit = handleSubmit(async ({email, password }) => {
+    let history = useHistory()
+    const {isAuth, setAuth} = useContext(AuthContext)
+    const { register, handleSubmit, errors } = useForm<FormValues>({ resolver });
+    const [signUp, {loading, error, data}] = useMutation(SIGNUP)
+    const onSubmit = handleSubmit(async ({email, password }) => {
     try{
-    await signUp({ variables: { email, password } });
-    console.log(data)
+    const response = await signUp({ variables: { email, password } });
+    toast.success(`Welcome ${response.data.signUp.email} Sign Up was successful, please login`)
+    setTimeout(()=>{history.push('/signin')},3000)
     }  catch(err){
         toast.error(err.message)
-        console.log(err.message);
     }
 });
 
-  return (
-    <form onSubmit={onSubmit}>
-      <input name="email" placeholder="email" ref={register} />
-      {errors?.email && <p>{errors.email.message}</p>}
-      
-      <label>Password</label>
-      <input name="password" type='password' ref={register} />
+if(isAuth){
+    history.push('/categories')
+}
 
-      <input type="submit" />
+  return (
+    <div>
+    <ToastContainer />
+    <FormContainer>
+        <FormHeader>Sign Up</FormHeader>
+    <form onSubmit={onSubmit}>
+      <EmailInput name="email" placeholder="email" ref={register} />
+      {errors?.email && <p>{errors.email.message}</p>}
+      <PasswordInput name="password" type='password' placeholder='password' ref={register} />
+      <SubmitButton type="submit" />
     </form>
+    </FormContainer>
+    </div>
   );
 }
 

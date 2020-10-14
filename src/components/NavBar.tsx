@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import styled from "styled-components";
 import AuthContext from '../context/AuthContext'
@@ -7,40 +8,78 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #5cbdb9;
+  background-color: #33691e;
   height: 60px;
   margin-bottom: 4rem;
   box-shadow: 0 10px 10px -10px;
 `;
 
-const NavbarItem = styled.div`
+const NavbarItem = styled.button`
   font-size: 2rem;
   margin-right: 1rem;
-  color: white;
-
+  background-color: #e8f5e9;
+  border: none;
+  border-radius: 4px;
+  height: 70%;
+  color: black;
+  width: 100px;
+  font-size: 14px;
   &:hover {
     opacity: 0.5;
     cursor: pointer;
+  } 
+  a{
+    text-decoration: none;
   }
-    margin: 20px;
-    text-transform: uppercase;
-    font-size: 14px;
 `;
 
 const NavBar: React.FC = () => {
+    let history = useHistory()
     const {isAuth, setAuth} = useContext(AuthContext)
-    console.log(isAuth)
-  return (
-<Wrapper>
-    <NavbarItem>
-        <Link to='/signup'>Sign up</Link>
-    </NavbarItem>
-    <NavbarItem>
-          <Link to='/signin'>Sign in</Link>
-    </NavbarItem>
-    <NavbarItem onClick={() => setAuth(true)}>Log out</NavbarItem>
-</Wrapper>
-  );
+    useEffect(()=>{
+        const token = window.localStorage.getItem('token') || null
+        if(token){
+            setAuth(true)
+        }else{
+            setAuth(false)
+        }
+    },[setAuth, isAuth])
+
+    const logout = () => {
+        setAuth(false)
+        history.push('/')
+        localStorage.clear()
+    }
+
+    if(isAuth){
+        return (
+            <Wrapper>
+                <NavbarItem>
+                      <Link to='/'>Home</Link>
+                </NavbarItem>
+                <NavbarItem>
+                    <Link to='/categories'>Categories</Link>
+                </NavbarItem>
+                <NavbarItem onClick={logout}>Log out</NavbarItem>
+            </Wrapper>
+              );
+    }
+    else{
+        return (
+            <Wrapper>
+                <NavbarItem>
+                      <Link to='/'>Home</Link>
+                </NavbarItem>
+                <NavbarItem>
+                    <Link to='/signup'>Sign up</Link>
+                </NavbarItem>
+                <NavbarItem>
+                      <Link to='/signin'>Sign in</Link>
+                </NavbarItem>
+            </Wrapper>
+              );
+    }
+  
 };
 
 export default NavBar;

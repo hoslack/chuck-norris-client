@@ -9,16 +9,15 @@ import {
   concat } from '@apollo/client'
 import App from './App';
 import { GlobalStyle } from './styles/GlobalStyle'
-
+import 'react-toastify/dist/ReactToastify.css'
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
   operation.setContext({
     headers: {
-      authorization: "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTYwMjYxNTYxMiwiZXhwIjoxNjAyNzg4NDEyfQ.ln4XTpl8qzxiHKMGJ0Yp4M-oBB0xx9U9BxhaT_QD7Ow",
+      authorization: `bearer ${window.localStorage.getItem('token')}`,
     }
   });
-
   return forward(operation);
 })
 const httpLink = createHttpLink({uri: 'http://localhost:4000/graphql'})

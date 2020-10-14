@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
 body{
-  background-color: #ebf6f5;
+  background-color: #e8f5e9;
   font-size: 1.4rem;
 font-family: sans-serif; 
 }
@@ -13,7 +13,6 @@ font-family: sans-serif;
     padding: 0;
     box-sizing: inherit;
   }
-
   html {
     font-size: 62.5%; /*1rem = 10px*/
     box-sizing: border-box;    
