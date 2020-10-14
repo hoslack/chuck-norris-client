@@ -9,20 +9,19 @@ interface IProps {
   }
 
 const Joke: React.FC<IProps> = ({category}: IProps) => {
-    console.log(category)
-    const [jokeText, setJokeText] = useState('')
+    const [jokeObject, setJokeObject] = useState({id: '', value: '', icon_url:''})
     const [ joke, {loading, error, data} ] = useMutation(JOKE);
 
     const getJoke = async () => {
         try{
             const response = await joke({ variables: { category } })
-            console.log(response)
-            
-            }  catch(err){
+            console.log(response.data.joke)
+        setJokeObject(response.data.joke)
+        }   
+            catch(err){
                 console.log(err)
             }
     }
-
       useEffect(()=> {
         getJoke()
       },[category])
@@ -37,7 +36,8 @@ const Joke: React.FC<IProps> = ({category}: IProps) => {
       }
       else{
       return (<JokeContainer>
-          <JokeText>Joke</JokeText>
+          <JokeIcon src={jokeObject.icon_url  && jokeObject.icon_url} alt="joke icon"/>
+          <JokeText>{ jokeObject.value && jokeObject.value}</JokeText>
       </JokeContainer>)
 }
 }
@@ -51,16 +51,25 @@ justify-content: center;
 align-content: space-between;
 border-radius: 10px;
 justify-content: space-between;
-width: 70%;
-max-width: ;
+width: 50%;
 height: auto;
-background-color: #9e9d24;
+background-color: #FFFFFF;
 padding: 1rem;
 margin: 0 auto;
+margin-top: 50px;
 `
 
 const JokeText = styled.p`
+font-family: 'Roboto', sans-serif;
+font-size: 20px;
+letter-spacing: 2.5px;
+font-weight: 500;
+color: #000;
+`
 
+const JokeIcon = styled.img`
+margin: 0 auto;
+margin-bottom: 20px;
 `
 
 export default Joke
