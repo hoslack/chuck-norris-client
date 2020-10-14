@@ -29,12 +29,12 @@ const resolver: Resolver<FormValues> = async (values) => {
 const SignIn: React.FC = () => {
   let history = useHistory();
   const { isAuth, setAuth } = useContext(AuthContext);
-  const { register, handleSubmit, errors } = useForm<FormValues>({ resolver });
-  const [signIn] = useMutation(SIGNIN);
+  const { register, handleSubmit, errors } = useForm<FormValues>({ resolver })
+  const [signIn] = useMutation(SIGNIN)
   const onSubmit = handleSubmit(async ({ email, password }) => {
     try {
-      const response = await signIn({ variables: { email, password } });
-      toast.success('Sign In was successful');
+      const response = await signIn({ variables: { email, password } })
+      toast.success('Sign In was successful')
       await window.localStorage.setItem(
         'token',
         response.data.signIn.accessToken
