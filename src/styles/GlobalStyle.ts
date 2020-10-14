@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 body{
@@ -17,4 +17,4 @@ font-family: sans-serif;
     font-size: 62.5%; /*1rem = 10px*/
     box-sizing: border-box;    
   }  
-`
+`;

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import styled from "styled-components";
-import AuthContext from '../context/AuthContext'
+import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import AuthContext from '../context/AuthContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,65 +27,77 @@ const NavbarItem = styled.button`
   &:hover {
     opacity: 0.5;
     cursor: pointer;
-  } 
-  a{
+  }
+  a {
     text-decoration: none;
   }
 `;
 
 const NavBar: React.FC = () => {
-    let history = useHistory()
-    const {isAuth, setAuth} = useContext(AuthContext)
-    useEffect(()=>{
-        const token = window.localStorage.getItem('token') || null
-        if(token){
-            setAuth(true)
-        }else{
-            setAuth(false)
-        }
-    },[setAuth, isAuth])
+  let history = useHistory();
+  const { isAuth, setAuth } = useContext(AuthContext);
+  useEffect(() => {
+    const token = window.localStorage.getItem('token') || null;
+    if (token) {
+      setAuth(true);
+    } else {
+      setAuth(false);
+    }
+  }, [setAuth, isAuth]);
 
-    const logout = () => {
-        setAuth(false)
-        history.push('/')
-        localStorage.clear()
-    }
+  const logout = () => {
+    setAuth(false);
+    history.push('/');
+    localStorage.clear();
+  };
 
-    if(isAuth){
-        return (
-            <Wrapper>
-                <NavbarItem onClick={(e)=>{e.preventDefault()}}>
-                      <Link to='/'>Home</Link>
-                </NavbarItem>
-                <NavbarItem onClick={(e)=>{e.preventDefault()}}>
-                    <Link to='/categories'>Categories</Link>
-                </NavbarItem>
-                <NavbarItem onClick={logout}>Log out</NavbarItem>
-            </Wrapper>
-              );
-    }
-    else{
-        return (
-            <Wrapper>
-                <NavbarItem
-                onClick={(e)=>{e.preventDefault()}}
-                >
-                    <Link to='/'>Home</Link>
-                </NavbarItem>
-                <NavbarItem
-                onClick={(e)=>{e.preventDefault()}}
-                >
-                    <Link to='/signup'>Sign up</Link>
-                </NavbarItem>
-                <NavbarItem
-                onClick={(e)=>{e.preventDefault()}}
-                >
-                     <Link to='/signin'>Sign in</Link>
-                </NavbarItem>
-            </Wrapper>
-              );
-    }
-  
+  if (isAuth) {
+    return (
+      <Wrapper>
+        <NavbarItem
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Link to="/">Home</Link>
+        </NavbarItem>
+        <NavbarItem
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Link to="/categories">Categories</Link>
+        </NavbarItem>
+        <NavbarItem onClick={logout}>Log out</NavbarItem>
+      </Wrapper>
+    );
+  } else {
+    return (
+      <Wrapper>
+        <NavbarItem
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Link to="/">Home</Link>
+        </NavbarItem>
+        <NavbarItem
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Link to="/signup">Sign up</Link>
+        </NavbarItem>
+        <NavbarItem
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <Link to="/signin">Sign in</Link>
+        </NavbarItem>
+      </Wrapper>
+    );
+  }
 };
 
 export default NavBar;
